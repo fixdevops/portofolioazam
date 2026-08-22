@@ -1,9 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { supabase } from "../supabase";
 import {
   LayoutDashboard,
-  Tv2,
-  Film,
   FolderKanban,
   Award,
   BookOpen,
@@ -13,75 +12,33 @@ import {
   GraduationCap,
   Briefcase,
   FileText,
+  UserCircle,
   X,
   Zap,
 } from "lucide-react";
 
 const menuItems = [
-  {
-    label: "Dashboard",
-    path: "/dashboard",
-    icon: LayoutDashboard,
-  },
-  {
-    label: "Manage Animes",
-    path: "/dashboard/manage-animes",
-    icon: Tv2,
-  },
-  {
-    label: "Manage Reels",
-    path: "/dashboard/animes/manage-reels",
-    icon: Film,
-  },
-  {
-    label: "Manage Projects",
-    path: "/dashboard/frontdev/manage-projects",
-    icon: FolderKanban,
-  },
-  {
-    label: "Certificates",
-    path: "/dashboard/frontdev/manage-certificates",
-    icon: Award,
-  },
-  {
-    label: "Manage Blogs",
-    path: "/dashboard/frontdev/manage-blogs",
-    icon: BookOpen,
-  },
-  {
-    label: "Manage Quotes",
-    path: "/dashboard/creator/manage-quotes",
-    icon: Quote,
-  },
-  {
-    label: "Manage Audio",
-    path: "/dashboard/creator/manage-audio",
-    icon: Music2,
-  },
-  {
-    label: "Manage Chat",
-    path: "/dashboard/manage-chat",
-    icon: MessageSquare,
-  },
-  {
-    label: "Education",
-    path: "/dashboard/manage-education",
-    icon: GraduationCap,
-  },
-  {
-    label: "Experience",
-    path: "/dashboard/manage-experience",
-    icon: Briefcase,
-  },
-  {
-    label: "Resume",
-    path: "/dashboard/manage-resume",
-    icon: FileText,
-  },
+  { label: "Dashboard",       path: "/dashboard",                              icon: LayoutDashboard },
+  { label: "Profile & Skills", path: "/dashboard/manage-profile",              icon: UserCircle },
+  { label: "Manage Projects", path: "/dashboard/frontdev/manage-projects",     icon: FolderKanban },
+  { label: "Certificates",    path: "/dashboard/frontdev/manage-certificates", icon: Award },
+  { label: "Manage Blogs",    path: "/dashboard/frontdev/manage-blogs",        icon: BookOpen },
+  { label: "Manage Quotes",   path: "/dashboard/creator/manage-quotes",        icon: Quote },
+  { label: "Manage Audio",    path: "/dashboard/creator/manage-audio",         icon: Music2 },
+  { label: "Manage Chat",     path: "/dashboard/manage-chat",                  icon: MessageSquare },
+  { label: "Education",       path: "/dashboard/manage-education",             icon: GraduationCap },
+  { label: "Experience",      path: "/dashboard/manage-experience",            icon: Briefcase },
+  { label: "Resume",          path: "/dashboard/manage-resume",                icon: FileText },
 ];
 
 export default function Sidebar({ onClose }) {
   const location = useLocation();
+  const [siteName, setSiteName] = useState("Admin Panel");
+
+  useEffect(() => {
+    supabase.from("site_settings").select("site_name").limit(1).maybeSingle()
+      .then(({ data }) => { if (data?.site_name) setSiteName(data.site_name); });
+  }, []);
 
   return (
     <div className="w-64 bg-white border-r border-gray-200 h-full flex flex-col z-50 shadow-lg">
@@ -93,7 +50,7 @@ export default function Sidebar({ onClose }) {
           </div>
           <div>
             <p className="text-sm font-bold text-gray-900 leading-none">Admin Panel</p>
-            <p className="text-[10px] text-gray-400 mt-0.5">Fikri Asyam</p>
+            <p className="text-[10px] text-gray-400 mt-0.5">{siteName}</p>
           </div>
         </div>
         {onClose && (

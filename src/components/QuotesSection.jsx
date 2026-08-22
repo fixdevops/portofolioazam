@@ -1,16 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '../supabase';
 
-const INTERVAL_MS = 5000; // ganti quote tiap 5 detik
-
-const categoryLabel = {
-  motivation: 'Motivasi',
-  life: 'Sindiran',
-  love: 'Cinta',
-  wisdom: 'Kebijaksanaan',
-  funny: 'Lucu',
-  other: 'Lainnya',
-};
+const INTERVAL_MS = 5000;
 
 export default function QuotesSection() {
   const [quotes, setQuotes] = useState([]);
@@ -22,7 +13,7 @@ export default function QuotesSection() {
       const { data } = await supabase
         .from('my_quotes')
         .select('id, text, author, category')
-        .eq('status', 'approved')
+        .eq('status', 'active')
         .order('created_at', { ascending: false });
       if (data && data.length > 0) {
         // acak urutan agar tidak monoton
@@ -81,14 +72,7 @@ export default function QuotesSection() {
             {q.text}
           </p>
           <div className="flex items-center justify-between mt-2 sm:mt-3 pl-4">
-            <div className="flex items-center gap-2">
-              <span className="text-[11px] sm:text-xs font-medium text-gray-500">— {q.author}</span>
-              {q.category && q.category !== 'other' && (
-                <span className="text-[10px] px-1.5 py-0.5 rounded bg-gray-100 text-gray-400">
-                  {categoryLabel[q.category] || q.category}
-                </span>
-              )}
-            </div>
+            <span className="text-[11px] sm:text-xs font-medium text-gray-500">— {q.author}</span>
 
             {/* Nav dots + arrows */}
             {quotes.length > 1 && (

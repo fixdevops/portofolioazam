@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { useSiteSettings } from '../hooks/useSiteSettings';
 
 const NavCreator = ({ children }) => {
   const location = useLocation();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const siteSettings = useSiteSettings();
+  const siteName = siteSettings?.site_name || 'Portfolio';
 
   const navItems = [
     { path: '/', icon: 'ri-home-4-line', activeIcon: 'ri-home-4-fill', label: 'Home' },
@@ -11,12 +14,6 @@ const NavCreator = ({ children }) => {
     { path: '/certificates', icon: 'ri-folders-line', activeIcon: 'ri-folders-fill', label: 'Certificates' },
     { path: '/blogs', icon: 'ri-news-line', activeIcon: 'ri-news-fill', label: 'Blogs' },
     { path: '/others', icon: 'ri-apps-line', activeIcon: 'ri-apps-fill', label: 'Others', hideOnDesktop: true },
-  ];
-
-  // item tambahan yang hanya muncul di sidebar mobile (tidak di bottom nav)
-  const sidebarOnlyItems = [
-    { path: '/anime', icon: 'ri-tv-2-line', activeIcon: 'ri-tv-2-fill', label: 'Anime' },
-    { path: '/reels', icon: 'ri-film-line', activeIcon: 'ri-film-fill', label: 'Reels' },
   ];
 
   const toggleSidebar = () => {
@@ -35,7 +32,7 @@ const NavCreator = ({ children }) => {
           <div className="flex items-center justify-between">
             {/* Desktop Logo - Hidden di Mobile */}
             <Link to="/" className="hidden md:flex items-center space-x-2">
-              <span className="text-xl font-bold text-gray-800">Fikri Asyam</span>
+              <span className="text-xl font-bold text-gray-800">{siteName}</span>
             </Link>
 
             {/* Mobile Menu Icon - Kiri */}
@@ -61,8 +58,6 @@ const NavCreator = ({ children }) => {
                   </div>
                 );
               })}
-              <Link to="/anime" className={`text-black hover:text-gray-600 transition-colors font-medium ${location.pathname === '/anime' ? 'text-gray-600 font-semibold' : ''}`}>Anime</Link>
-              <Link to="/reels" className={`text-black hover:text-gray-600 transition-colors font-medium ${location.pathname === '/reels' ? 'text-gray-600 font-semibold' : ''}`}>Reels</Link>
             </div>
 
             {/* Resumes Button - Kanan (Mobile & Desktop) */}
@@ -90,7 +85,7 @@ const NavCreator = ({ children }) => {
             {/* Sidebar Header */}
             <div className="flex items-center justify-between p-4 border-b border-gray-200">
               <Link to="/" className="flex items-center space-x-2" onClick={closeSidebar}>
-                <span className="text-xl font-bold text-gray-800">FIXz</span>
+                <span className="text-xl font-bold text-gray-800">{siteName}</span>
               </Link>
               <button
                 className="p-2 rounded-lg hover:bg-gray-100"
@@ -104,25 +99,6 @@ const NavCreator = ({ children }) => {
             <div className="flex-1 overflow-y-auto py-4">
               <div className="space-y-1 px-2">
                 {navItems.map((item) => {
-                  const isActive = location.pathname === item.path;
-                  return (
-                    <Link
-                      key={item.path}
-                      to={item.path}
-                      className={`flex items-center px-4 py-3 rounded-lg text-base font-medium transition-colors ${isActive
-                          ? 'bg-gray-100 text-gray-800'
-                          : 'text-gray-600 hover:bg-gray-50 hover:text-gray-800'
-                        }`}
-                      onClick={closeSidebar}
-                    >
-                      <i className={`${isActive ? item.activeIcon : item.icon} mr-3 text-xl`}></i>
-                      {item.label}
-                    </Link>
-                  );
-                })}
-
-                {/* Anime & Reels — hanya di sidebar */}
-                {sidebarOnlyItems.map((item) => {
                   const isActive = location.pathname === item.path;
                   return (
                     <Link

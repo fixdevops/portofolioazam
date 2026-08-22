@@ -13,7 +13,7 @@ import {
   Filler,
 } from "chart.js";
 import {
-  Tv2, Film, FolderKanban, Award, BookOpen,
+  FolderKanban, Award, BookOpen,
   Quote, Music2, ArrowRight, RefreshCw,
   Eye, TrendingUp, BarChart2,
 } from "lucide-react";
@@ -42,8 +42,6 @@ function fmtFull(iso) {
 
 // ── content sections config ────────────────────────────────
 const SECTIONS = [
-  { label: "Animes",       path: "/dashboard/manage-animes",                table: "animes",         icon: Tv2 },
-  { label: "Reels",        path: "/dashboard/animes/manage-reels",          table: "anime_story",    icon: Film },
   { label: "Projects",     path: "/dashboard/frontdev/manage-projects",     table: "my_project",     icon: FolderKanban },
   { label: "Certificates", path: "/dashboard/frontdev/manage-certificates", table: "my_certificate", icon: Award },
   { label: "Blogs",        path: "/dashboard/frontdev/manage-blogs",        table: "my_blogs",       icon: BookOpen },
