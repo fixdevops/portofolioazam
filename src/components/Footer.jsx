@@ -10,7 +10,7 @@ export default function Footer() {
       .then(({ data }) => { if (data) setProfile(data); });
   }, []);
 
-  const name        = profile?.name         || "Portfolio";
+  const name        = profile?.name         || "King Azam";
   const githubUrl   = profile?.github_url   || "#";
   const tiktokUrl   = profile?.tiktok_url   || "#";
   const instagramUrl = profile?.instagram_url || "#";
