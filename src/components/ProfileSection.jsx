@@ -27,11 +27,11 @@ export default function ProfileSection() {
     );
   }
 
-  // Fallback ke data statis kalau tabel kosong
-  const name    = profile?.name    || "Fikri Asyam";
-  const role    = profile?.role    || "Cysec Engineer || Software Engineer";
-  const bio     = profile?.bio     || "";
-  const photo   = profile?.photo_url || `${import.meta.env.BASE_URL}fotoprofile fixz.png`;
+  // Fallback ke data statis kalau tabel kosong / Supabase mati
+  const name  = profile?.name || "M. Nabhan Dhiyauz Zaman";
+  const role  = profile?.role || "Public Speaker || Communication Enthusiast";
+  const bio   = profile?.bio  || "Saya M. Nabhan Dhiyauz Zaman, seorang mahasiswa yang memiliki minat besar dan keahlian di bidang public speaking dan komunikasi. Saya percaya bahwa penyampaian pesan yang jelas dan persuasif adalah kunci untuk menginspirasi serta membangun hubungan yang berdampak.";
+  const photo = profile?.photo_url || `${import.meta.env.BASE_URL}Foto M. Nabhan Dhiyauz Zaman.jpg`;
 
   const socials = [
     { href: profile?.github_url,    icon: "ri-github-fill",    hover: "hover:text-black" },

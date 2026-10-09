@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite --port 6565",
-    "build": "vite build",
+    "build": "node scripts/inject-meta.js && vite build",
     "lint": "eslint .",
     "preview": "vite preview"
   },
